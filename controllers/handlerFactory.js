@@ -81,6 +81,8 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
 
+    // Added explain Indexes for Read Performance
+    // const doc = await features.query.explain();  // I keep that just referance...
     const doc = await features.query;
     // const tours = await query;
 

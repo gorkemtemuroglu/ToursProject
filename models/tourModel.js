@@ -112,6 +112,10 @@ const tourSchmea = new mongoose.Schema(
   },
 );
 
+// tourSchmea.index({ price: 1 });
+tourSchmea.index({ price: 1, ratingsAverage: -1 });
+tourSchmea.index({ slug: 1 });
+
 tourSchmea.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
