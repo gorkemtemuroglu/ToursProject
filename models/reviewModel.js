@@ -33,6 +33,9 @@ const reviewSchema = new mongoose.Schema(
   },
 );
 
+// One user can only give one comment about a spesific tour.
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 reviewSchema.pre(/^find/, function (next) {
   //   this.populate({
   //     path: 'tour',
