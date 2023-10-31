@@ -90,7 +90,10 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
+
   //console.log(token);
   if (!token) {
     return next(new AppError('You are not loged in!', 401));
@@ -114,6 +117,30 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   req.user = freshUser;
+  next();
+});
+
+// Only for rendered pages, no errors!
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET,
+    );
+
+    const freshUser = await User.findById(decoded.id);
+    if (!freshUser) {
+      return next();
+    }
+
+    if (freshUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    res.locals.user = freshUser;
+    // req.user = freshUser;
+    return next();
+  }
   next();
 });
 
