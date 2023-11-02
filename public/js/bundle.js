@@ -12281,23 +12281,22 @@ if (logOutBtn) {
 }
 if (userDataForm) {
   userDataForm.addEventListener('submit', function (e) {
-    var _document3, _document4;
+    var _document3, _document4, _document5;
     e.preventDefault();
-    var name = (_document3 = document) === null || _document3 === void 0 ? void 0 : _document3.getElementById('name').value;
-    var email = (_document4 = document) === null || _document4 === void 0 ? void 0 : _document4.getElementById('email').value;
-    (0, _updateSettings.updateSettings)({
-      name: name,
-      email: email
-    }, 'data');
+    var form = new FormData();
+    form.append('name', (_document3 = document) === null || _document3 === void 0 ? void 0 : _document3.getElementById('name').value);
+    form.append('email', (_document4 = document) === null || _document4 === void 0 ? void 0 : _document4.getElementById('email').value);
+    form.append('photo', (_document5 = document) === null || _document5 === void 0 ? void 0 : _document5.getElementById('photo').files[0]);
+    (0, _updateSettings.updateSettings)(form, 'data');
   });
 }
 if (updatePasswordForm) {
   updatePasswordForm.addEventListener('submit', function (e) {
-    var _document5, _document6, _document7;
+    var _document6, _document7, _document8;
     e.preventDefault();
-    var passwordCurrent = (_document5 = document) === null || _document5 === void 0 ? void 0 : _document5.getElementById('password-current').value;
-    var password = (_document6 = document) === null || _document6 === void 0 ? void 0 : _document6.getElementById('password').value;
-    var passwordConfirm = (_document7 = document) === null || _document7 === void 0 ? void 0 : _document7.getElementById('password-confirm').value;
+    var passwordCurrent = (_document6 = document) === null || _document6 === void 0 ? void 0 : _document6.getElementById('password-current').value;
+    var password = (_document7 = document) === null || _document7 === void 0 ? void 0 : _document7.getElementById('password').value;
+    var passwordConfirm = (_document8 = document) === null || _document8 === void 0 ? void 0 : _document8.getElementById('password-confirm').value;
     (0, _updateSettings.updateSettings)({
       passwordCurrent: passwordCurrent,
       password: password,
